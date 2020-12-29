@@ -55,6 +55,7 @@ jobs:
       - name: Push image
         run: |
           IMAGE_ID=docker.pkg.github.com/${{ github.repository }}/$IMAGE_NAME
+          GCR_IMAGE_ID=gcr.io/${{ gcr_project_id }}/$IMAGE_NAME
 
           # Change all uppercase to lowercase
           IMAGE_ID=$(echo $IMAGE_ID | tr '[A-Z]' '[a-z]')
@@ -73,3 +74,12 @@ jobs:
 
           docker tag $IMAGE_NAME $IMAGE_ID:$VERSION
           docker push $IMAGE_ID:$VERSION
+          
+          docker tag $IMAGE_NAME $GCR_IMAGE_ID:$VERSION
+      - name: Push Image to GCR
+        uses: RaccoonDev/push-docker-gcr@v1
+        with:
+          # Docker Image Name
+          image_name: gcr.io/${{ gcr_project_id }}/go-demo-microservice
+          # Docker Image Tag
+          image_tag: $VERSION
