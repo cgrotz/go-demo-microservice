@@ -82,6 +82,6 @@ jobs:
         uses: RaccoonDev/push-docker-gcr@v1
         with:
           # Docker Image Name
-          image_name: gcr.io/${{ secrets.GOOGLE_PROJECT_ID }}/go-demo-microservice
+          image_name: go-demo-microservice
           # Docker Image Tag
           image_tag: latest
